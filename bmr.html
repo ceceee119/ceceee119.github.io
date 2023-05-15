@@ -2,72 +2,25 @@
 <html>
 <head>
   <title>BMR 計算器</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f1f1f1;
-      margin: 0;
-      padding: 20px;
-    }
-    
-    h1 {
-      text-align: center;
-    }
-    
-    label {
-      display: block;
-      margin-bottom: 10px;
-    }
-    
-    input[type="text"] {
-      width: 200px;
-      padding: 5px;
-      font-size: 16px;
-    }
-    
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    
-    button:hover {
-      background-color: #45a049;
-    }
-    
-    #result {
-      margin-top: 20px;
-      font-size: 18px;
-      text-align: center;
-      font-weight: bold;
-    }
-  </style>
-  <script>
+  <script type="text/javascript">
     function calculateBMR() {
-      var weight = parseFloat(document.getElementById("weight").value);
-      var height = parseFloat(document.getElementById("height").value);
-      var age = parseFloat(document.getElementById("age").value);
+      var weight = document.getElementById("weight").value;
+      var height = document.getElementById("height").value;
       var gender = document.getElementById("gender").value;
+      var age = document.getElementById("age").value;
       
-      // 檢查使用者是否輸入有效數值
-      if (isNaN(weight) || isNaN(height) || isNaN(age) || weight <= 0 || height <= 0 || age <= 0) {
-        alert("請輸入有效的體重、身高和年齡！");
-        return;
+      if (weight > 0 && height > 0 && age > 0) {
+        var bmr;
+        
+        if (gender === "男") {
+          bmr = 66 + (13.75 * weight) + (5 * height) - (6.75 * age);
+        } else if (gender === "女") {
+          bmr = 655 + (9.56 * weight) + (1.85 * height) - (4.68 * age);
+        }
+        
+        var result = "您的 BMR 為: " + bmr.toFixed(2) + " 大卡";
+        document.getElementById("result").innerHTML = result;
       }
-      
-      // 計算BMR
-      var bmr;
-      if (gender === "male") {
-        bmr = 10 * weight + 6.25 * height * 100 - 5 * age + 5;
-      } else {
-        bmr = 10 * weight + 6.25 * height * 100 - 5 * age - 161;
-      }
-      
-      // 顯示BMR結果
-      document.getElementById("result").innerHTML = "您的BMR為: " + bmr.toFixed(2) + " 大卡";
     }
   </script>
 </head>
@@ -75,16 +28,34 @@
   <h1>BMR 計算器</h1>
   
   <label for="weight">體重（公斤）：</label>
-  <input type="text" id="weight" placeholder="請輸入體重" /><br /><br />
+  <input type="text" id="weight" name="weight">
+  
+  <br><br>
   
   <label for="height">身高（公分）：</label>
-  <input type="text" id="height" placeholder="請輸入身高" /><br /><br />
+  <input type="text" id="height" name="height">
   
-  <label for="age">年齡：</label>
-  <input type="text" id="age" placeholder="請輸入年齡" /><br /><br />
+  <br><br>
   
   <label for="gender">性別：</label>
-  <select id="gender">
-    <option value="male">男性</option>
-    <option value="female">女性</option>
- 
+  <select id="gender" name="gender">
+    <option value="男">男</option>
+    <option value="女">女</option>
+  </select>
+  
+  <br><br>
+  
+  <label for="age">年齡：</label>
+  <input type="text" id="age" name="age">
+  
+  <br><br>
+  
+  <button onclick="calculateBMR()">計算 BMR</button>
+  
+  <br><br>
+  
+  <div id="result"></div>
+</body>
+</html>
+
+
